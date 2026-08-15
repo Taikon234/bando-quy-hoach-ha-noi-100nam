@@ -297,6 +297,24 @@ function App() {
     handleSelectFeatureRef.current = handleSelectFeature;
   }, [handleSelectFeature]);
 
+  // Computed count of matched planning zones for FilterPanel
+  const matchedZonesCount = useMemo(() => {
+    const allFeatures = [...QHC_GEOJSON.features, ...QHPK_GEOJSON.features];
+    return allFeatures.filter((f) => {
+      if (filters.grp !== "all" && f.properties?.grp !== filters.grp) return false;
+      if (filters.landUse !== "all") {
+        const cat = f.properties?.category || "";
+        if (filters.landUse === "residential" && cat !== "Đất ở") return false;
+        if (filters.landUse === "green" && cat !== "Đất cây xanh") return false;
+        if (filters.landUse === "water" && cat !== "Mặt nước") return false;
+        if (filters.landUse === "public" && cat !== "Đất công cộng") return false;
+        if (filters.landUse === "traffic" && cat !== "Đất giao thông") return false;
+        if (filters.landUse === "industrial" && cat !== "Đất công nghiệp") return false;
+      }
+      return true;
+    }).length;
+  }, [filters]);
+
   // Update layer visibility and land use filter using native MapLibre GPU filters
   useEffect(() => {
     const map = mapRef.current;
@@ -1023,10 +1041,7 @@ function App() {
           onResetFilters={() =>
             setFilters({ grp: "all", landUse: "all", metroStatus: "all" })
           }
-          matchedCount={
-            filteredQHCGeoJSON.features.length +
-            filteredQHPKGeoJSON.features.length
-          }
+          matchedCount={matchedZonesCount}
           totalCount={
             QHC_GEOJSON.features.length + QHPK_GEOJSON.features.length
           }
