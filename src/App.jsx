@@ -297,60 +297,7 @@ function App() {
     handleSelectFeatureRef.current = handleSelectFeature;
   }, [handleSelectFeature]);
 
-  // Filtered Planning GeoJSON datasets
-  const filteredQHCGeoJSON = useMemo(() => {
-    if (filters.grp === "QHPK") {
-      return { type: "FeatureCollection", features: [] };
-    }
-    const features = QHC_GEOJSON.features.filter((f) => {
-      if (filters.landUse === "all") return true;
-      const cat = (f.properties.category || f.properties.name || "").toLowerCase();
-      if (filters.landUse === "residential") return /ở|dân cư|đô thị/.test(cat);
-      if (filters.landUse === "green") return /cây xanh|công viên|thể thao|tdtt/.test(cat);
-      if (filters.landUse === "water") return /sông|hồ|mặt nước/.test(cat);
-      if (filters.landUse === "public") return /công cộng|thương mại|dịch vụ/.test(cat);
-      if (filters.landUse === "traffic") return /giao thông|hạ tầng|sân bay/.test(cat);
-      if (filters.landUse === "industrial") return /công nghiệp|công nghệ/.test(cat);
-      return true;
-    });
-    return { type: "FeatureCollection", features };
-  }, [filters]);
-
-  const filteredQHPKGeoJSON = useMemo(() => {
-    if (filters.grp === "QHC") {
-      return { type: "FeatureCollection", features: [] };
-    }
-    const features = QHPK_GEOJSON.features.filter((f) => {
-      if (filters.landUse === "all") return true;
-      const cat = (f.properties.category || f.properties.name || "").toLowerCase();
-      if (filters.landUse === "residential") return /ở|dân cư|đô thị/.test(cat);
-      if (filters.landUse === "green") return /cây xanh|công viên|thể thao|tdtt/.test(cat);
-      if (filters.landUse === "water") return /sông|hồ|mặt nước/.test(cat);
-      if (filters.landUse === "public") return /công cộng|thương mại|dịch vụ/.test(cat);
-      if (filters.landUse === "traffic") return /giao thông|hạ tầng|sân bay/.test(cat);
-      if (filters.landUse === "industrial") return /công nghiệp|công nghệ/.test(cat);
-      return true;
-    });
-    return { type: "FeatureCollection", features };
-  }, [filters]);
-
-  // Update dynamic GeoJSON data when filters change
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map || !isMapReady) return;
-
-    try {
-      const qhcSource = map.getSource("qhc-data");
-      if (qhcSource) qhcSource.setData(filteredQHCGeoJSON);
-
-      const qhpkSource = map.getSource("qhpk-data");
-      if (qhpkSource) qhpkSource.setData(filteredQHPKGeoJSON);
-    } catch (e) {
-      console.warn("Update GeoJSON error:", e);
-    }
-  }, [filteredQHCGeoJSON, filteredQHPKGeoJSON, isMapReady]);
-
-  // Update layer visibility
+  // Update layer visibility and land use filter using native MapLibre GPU filters
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !isMapReady) return;
@@ -365,11 +312,41 @@ function App() {
       }
     };
 
-    setVisibility("qhc-fill", layers.qhc);
-    setVisibility("qhc-line", layers.qhc);
-    setVisibility("qhpk-fill", layers.qhpk);
-    setVisibility("qhpk-line", layers.qhpk);
+    // 1. Group visibility (QHC / QHPK)
+    const isQHCVisible = layers.qhc && (filters.grp === "all" || filters.grp === "QHC");
+    const isQHPKVisible = layers.qhpk && (filters.grp === "all" || filters.grp === "QHPK");
 
+    setVisibility("qhc-fill", isQHCVisible);
+    setVisibility("qhc-line", isQHCVisible);
+    setVisibility("qhpk-fill", isQHPKVisible);
+    setVisibility("qhpk-line", isQHPKVisible);
+
+    // 2. Land use filter expression
+    let landUseFilter = null;
+    if (filters.landUse === "residential") {
+      landUseFilter = ["==", ["get", "category"], "Đất ở"];
+    } else if (filters.landUse === "green") {
+      landUseFilter = ["==", ["get", "category"], "Đất cây xanh"];
+    } else if (filters.landUse === "water") {
+      landUseFilter = ["==", ["get", "category"], "Mặt nước"];
+    } else if (filters.landUse === "public") {
+      landUseFilter = ["==", ["get", "category"], "Đất công cộng"];
+    } else if (filters.landUse === "traffic") {
+      landUseFilter = ["==", ["get", "category"], "Đất giao thông"];
+    } else if (filters.landUse === "industrial") {
+      landUseFilter = ["==", ["get", "category"], "Đất công nghiệp"];
+    }
+
+    try {
+      if (map.getLayer("qhc-fill")) map.setFilter("qhc-fill", landUseFilter);
+      if (map.getLayer("qhc-line")) map.setFilter("qhc-line", landUseFilter);
+      if (map.getLayer("qhpk-fill")) map.setFilter("qhpk-fill", landUseFilter);
+      if (map.getLayer("qhpk-line")) map.setFilter("qhpk-line", landUseFilter);
+    } catch (e) {
+      console.warn("Set filter error:", e);
+    }
+
+    // 3. Metro visibility
     const isMetroActiveVisible =
       layers.metro &&
       (filters.metroStatus === "all" || filters.metroStatus === "operating");
@@ -382,7 +359,6 @@ function App() {
     setVisibility("metro-planned-lines", layers.metroPlan && filters.metroStatus === "all");
     setVisibility("metro-stations-circle-outer", layers.stations);
     setVisibility("metro-stations-circle-inner", layers.stations);
-    setVisibility("roads-labels-overlay", layers.roads);
   }, [layers, filters, isMapReady]);
 
   // Handle Measurement Layer updates
