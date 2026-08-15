@@ -471,14 +471,6 @@ function App() {
             tileSize: 256,
             attribution: "© CartoDB, © OpenStreetMap",
           },
-          "roads-labels": {
-            type: "raster",
-            tiles: [
-              "https://a.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}@2x.png",
-              "https://b.basemaps.cartocdn.com/rastertiles/voyager_only_labels/{z}/{x}/{y}@2x.png",
-            ],
-            tileSize: 256,
-          },
         },
         layers: [
           // 1. Basemaps
@@ -495,14 +487,6 @@ function App() {
             source: "carto-dark",
             layout: { visibility: initialDark ? "visible" : "none" },
             paint: { "raster-opacity": 0.98 },
-          },
-          // Road labels overlay placeholder on top
-          {
-            id: "roads-labels-overlay",
-            type: "raster",
-            source: "roads-labels",
-            layout: { visibility: "visible" },
-            paint: { "raster-opacity": 0.85 },
           },
         ],
       },
@@ -543,249 +527,204 @@ function App() {
         map.addSource("measure-data-source", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
       }
 
-      // Add planning layers before roads-labels-overlay so labels are on top
-      const beforeId = "roads-labels-overlay";
-
-      // 2. QHC Planning Layer
+      // 2. QHC Planning Layer (Added directly on top of basemap)
       if (!map.getLayer("qhc-fill")) {
-        map.addLayer(
-          {
-            id: "qhc-fill",
-            type: "fill",
-            source: "qhc-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "fill-color": ["case", ["has", "fc"], ["get", "fc"], "#8b2cff"],
-              "fill-opacity": 0.45,
-            },
+        map.addLayer({
+          id: "qhc-fill",
+          type: "fill",
+          source: "qhc-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-color": ["case", ["has", "fc"], ["to-color", ["get", "fc"]], "#8b2cff"],
+            "fill-opacity": 0.45,
           },
-          beforeId
-        );
+        });
       }
       if (!map.getLayer("qhc-line")) {
-        map.addLayer(
-          {
-            id: "qhc-line",
-            type: "line",
-            source: "qhc-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "line-color": "#6b21a8",
-              "line-width": 2,
-              "line-opacity": 0.85,
-            },
+        map.addLayer({
+          id: "qhc-line",
+          type: "line",
+          source: "qhc-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "line-color": "#6b21a8",
+            "line-width": 2,
+            "line-opacity": 0.85,
           },
-          beforeId
-        );
+        });
       }
 
       // 3. QHPK Planning Layer
       if (!map.getLayer("qhpk-fill")) {
-        map.addLayer(
-          {
-            id: "qhpk-fill",
-            type: "fill",
-            source: "qhpk-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "fill-color": ["case", ["has", "fc"], ["get", "fc"], "#ff5a00"],
-              "fill-opacity": 0.5,
-            },
+        map.addLayer({
+          id: "qhpk-fill",
+          type: "fill",
+          source: "qhpk-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-color": ["case", ["has", "fc"], ["to-color", ["get", "fc"]], "#ff5a00"],
+            "fill-opacity": 0.5,
           },
-          beforeId
-        );
+        });
       }
       if (!map.getLayer("qhpk-line")) {
-        map.addLayer(
-          {
-            id: "qhpk-line",
-            type: "line",
-            source: "qhpk-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "line-color": "#c2410c",
-              "line-width": 2,
-              "line-opacity": 0.9,
-            },
+        map.addLayer({
+          id: "qhpk-line",
+          type: "line",
+          source: "qhpk-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "line-color": "#c2410c",
+            "line-width": 2,
+            "line-opacity": 0.9,
           },
-          beforeId
-        );
+        });
       }
 
       // 4. Highlight Selection Layer
       if (!map.getLayer("search-highlight-fill")) {
-        map.addLayer(
-          {
-            id: "search-highlight-fill",
-            type: "fill",
-            source: "highlight-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "fill-color": "#00f2fe",
-              "fill-opacity": 0.55,
-            },
+        map.addLayer({
+          id: "search-highlight-fill",
+          type: "fill",
+          source: "highlight-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-color": "#00f2fe",
+            "fill-opacity": 0.55,
           },
-          beforeId
-        );
+        });
       }
       if (!map.getLayer("search-highlight-line")) {
-        map.addLayer(
-          {
-            id: "search-highlight-line",
-            type: "line",
-            source: "highlight-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "line-color": "#0284c7",
-              "line-width": 4,
-              "line-opacity": 1,
-            },
+        map.addLayer({
+          id: "search-highlight-line",
+          type: "line",
+          source: "highlight-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "line-color": "#0284c7",
+            "line-width": 4,
+            "line-opacity": 1,
           },
-          beforeId
-        );
+        });
       }
 
       // 5. Active Metro Lines
       if (!map.getLayer("metro-active-operating")) {
-        map.addLayer(
-          {
-            id: "metro-active-operating",
-            type: "line",
-            source: "metro-active-data",
-            filter: ["==", ["get", "statusType"], "operating"],
-            layout: { visibility: "visible" },
-            paint: {
-              "line-color": "#00a878",
-              "line-width": 4.5,
-              "line-opacity": 0.95,
-            },
+        map.addLayer({
+          id: "metro-active-operating",
+          type: "line",
+          source: "metro-active-data",
+          filter: ["==", ["get", "statusType"], "operating"],
+          layout: { visibility: "visible" },
+          paint: {
+            "line-color": "#00a878",
+            "line-width": 4.5,
+            "line-opacity": 0.95,
           },
-          beforeId
-        );
+        });
       }
       if (!map.getLayer("metro-active-construction")) {
-        map.addLayer(
-          {
-            id: "metro-active-construction",
-            type: "line",
-            source: "metro-active-data",
-            filter: ["==", ["get", "statusType"], "construction"],
-            layout: { visibility: "visible" },
-            paint: {
-              "line-color": "#ff6b00",
-              "line-width": 4.5,
-              "line-dasharray": [3, 2],
-              "line-opacity": 0.95,
-            },
+        map.addLayer({
+          id: "metro-active-construction",
+          type: "line",
+          source: "metro-active-data",
+          filter: ["==", ["get", "statusType"], "construction"],
+          layout: { visibility: "visible" },
+          paint: {
+            "line-color": "#ff6b00",
+            "line-width": 4.5,
+            "line-dasharray": [3, 2],
+            "line-opacity": 0.95,
           },
-          beforeId
-        );
+        });
       }
 
       // 6. Planned Metro Lines
       if (!map.getLayer("metro-planned-lines")) {
-        map.addLayer(
-          {
-            id: "metro-planned-lines",
-            type: "line",
-            source: "metro-planned-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "line-color": ["case", ["has", "color"], ["get", "color"], "#ef3cff"],
-              "line-width": 3.5,
-              "line-dasharray": [2, 2],
-              "line-opacity": 0.85,
-            },
+        map.addLayer({
+          id: "metro-planned-lines",
+          type: "line",
+          source: "metro-planned-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "line-color": ["case", ["has", "color"], ["to-color", ["get", "color"]], "#ef3cff"],
+            "line-width": 3.5,
+            "line-dasharray": [2, 2],
+            "line-opacity": 0.85,
           },
-          beforeId
-        );
+        });
       }
 
       // 7. Metro Stations
       if (!map.getLayer("metro-stations-circle-outer")) {
-        map.addLayer(
-          {
-            id: "metro-stations-circle-outer",
-            type: "circle",
-            source: "metro-stations-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "circle-radius": 7.5,
-              "circle-color": "#ff9800",
-              "circle-stroke-width": 2.5,
-              "circle-stroke-color": "#ffffff",
-            },
+        map.addLayer({
+          id: "metro-stations-circle-outer",
+          type: "circle",
+          source: "metro-stations-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "circle-radius": 7.5,
+            "circle-color": "#ff9800",
+            "circle-stroke-width": 2.5,
+            "circle-stroke-color": "#ffffff",
           },
-          beforeId
-        );
+        });
       }
       if (!map.getLayer("metro-stations-circle-inner")) {
-        map.addLayer(
-          {
-            id: "metro-stations-circle-inner",
-            type: "circle",
-            source: "metro-stations-data",
-            layout: { visibility: "visible" },
-            paint: {
-              "circle-radius": 3.5,
-              "circle-color": "#ffffff",
-            },
+        map.addLayer({
+          id: "metro-stations-circle-inner",
+          type: "circle",
+          source: "metro-stations-data",
+          layout: { visibility: "visible" },
+          paint: {
+            "circle-radius": 3.5,
+            "circle-color": "#ffffff",
           },
-          beforeId
-        );
+        });
       }
 
       // 8. Measurement Layer (Interactive GIS)
       if (!map.getLayer("measure-fill")) {
-        map.addLayer(
-          {
-            id: "measure-fill",
-            type: "fill",
-            source: "measure-data-source",
-            filter: ["==", "$type", "Polygon"],
-            layout: { visibility: "visible" },
-            paint: {
-              "fill-color": "#ef2029",
-              "fill-opacity": 0.3,
-            },
+        map.addLayer({
+          id: "measure-fill",
+          type: "fill",
+          source: "measure-data-source",
+          filter: ["==", "$type", "Polygon"],
+          layout: { visibility: "visible" },
+          paint: {
+            "fill-color": "#ef2029",
+            "fill-opacity": 0.3,
           },
-          beforeId
-        );
+        });
       }
       if (!map.getLayer("measure-lines")) {
-        map.addLayer(
-          {
-            id: "measure-lines",
-            type: "line",
-            source: "measure-data-source",
-            filter: ["==", "$type", "LineString"],
-            layout: { visibility: "visible" },
-            paint: {
-              "line-color": "#ef2029",
-              "line-width": 3.5,
-              "line-dasharray": [2, 2],
-            },
+        map.addLayer({
+          id: "measure-lines",
+          type: "line",
+          source: "measure-data-source",
+          filter: ["==", "$type", "LineString"],
+          layout: { visibility: "visible" },
+          paint: {
+            "line-color": "#ef2029",
+            "line-width": 3.5,
+            "line-dasharray": [2, 2],
           },
-          beforeId
-        );
+        });
       }
       if (!map.getLayer("measure-points")) {
-        map.addLayer(
-          {
-            id: "measure-points",
-            type: "circle",
-            source: "measure-data-source",
-            filter: ["==", "$type", "Point"],
-            layout: { visibility: "visible" },
-            paint: {
-              "circle-radius": 6,
-              "circle-color": "#ef2029",
-              "circle-stroke-width": 2,
-              "circle-stroke-color": "#ffffff",
-            },
+        map.addLayer({
+          id: "measure-points",
+          type: "circle",
+          source: "measure-data-source",
+          filter: ["==", "$type", "Point"],
+          layout: { visibility: "visible" },
+          paint: {
+            "circle-radius": 6,
+            "circle-color": "#ef2029",
+            "circle-stroke-width": 2,
+            "circle-stroke-color": "#ffffff",
           },
-          beforeId
-        );
+        });
       }
 
       console.log("=== All Planning & Metro Layers Added Successfully ===");
