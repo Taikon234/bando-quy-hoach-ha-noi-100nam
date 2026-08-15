@@ -1,0 +1,442 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "st-2a-01",
+      "properties": {
+        "name": "Ga Cát Linh",
+        "line": "Line 2A & Line 3 (Trung chuyển)",
+        "type": "Ga trên cao & ngầm liên thông",
+        "status": "Đang vận hành",
+        "address": "Phố Cát Linh, P. Cát Linh, Q. Đống Đa",
+        "connect": "Tuyến 2A + Tuyến 3 + Bus BRT 01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8278,
+          21.0279
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-02",
+      "properties": {
+        "name": "Ga La Thành",
+        "line": "Line 2A",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Đường Hoàng Cầu, Q. Đống Đa",
+        "connect": "Tuyến xe buýt nội đô"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8236,
+          21.0205
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-03",
+      "properties": {
+        "name": "Ga Thái Hà",
+        "line": "Line 2A",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Phố Yên Lãng, Q. Đống Đa",
+        "connect": "Trung tâm thương mại & văn phòng"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8193,
+          21.0152
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-04",
+      "properties": {
+        "name": "Ga Láng",
+        "line": "Line 2A",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Đường Láng ven sông Tô Lịch, Q. Đống Đa",
+        "connect": "Vành đai 2 đường bộ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8126,
+          21.0094
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-05",
+      "properties": {
+        "name": "Ga Thượng Đình",
+        "line": "Line 2A & Line 2 (Quy hoạch)",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Đường Nguyễn Trãi, Q. Thanh Xuân",
+        "connect": "KĐT Royal City, Trường ĐHKHTN, ĐHKHXH&NV"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8118,
+          20.9982
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-06",
+      "properties": {
+        "name": "Ga Vành Đai 3",
+        "line": "Line 2A & Line 8 (Quy hoạch)",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Nút giao Nguyễn Trãi - Khuất Duy Tiến, Q. Thanh Xuân",
+        "connect": "Vành đai 3 trên cao, ĐH Hà Nội, ĐH KHXH&NV"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8033,
+          20.9906
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-07",
+      "properties": {
+        "name": "Ga Phùng Khoang",
+        "line": "Line 2A",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Đường Nguyễn Trãi, Nam Từ Liêm / Thanh Xuân",
+        "connect": "Học viện An Ninh, Học viện Bưu chính Viễn thông"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.7925,
+          20.9818
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-08",
+      "properties": {
+        "name": "Ga Văn Quán",
+        "line": "Line 2A",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Đường Trần Phú, Q. Hà Đông",
+        "connect": "KĐT Văn Quán, Học viện Y Dược Cổ Truyền"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.782,
+          20.9734
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-09",
+      "properties": {
+        "name": "Ga Hà Đông",
+        "line": "Line 2A",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Đường Quang Trung, Q. Hà Đông",
+        "connect": "Bệnh viện Đa khoa Hà Đông, Chợ Hà Đông"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.7735,
+          20.9658
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-10",
+      "properties": {
+        "name": "Ga La Khê",
+        "line": "Line 2A",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Đường Quang Trung, P. La Khê, Q. Hà Đông",
+        "connect": "Khu dân cư Văn Phú, ParkCity"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.761,
+          20.9572
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-11",
+      "properties": {
+        "name": "Ga Văn Khê",
+        "line": "Line 2A",
+        "type": "Ga trên cao",
+        "status": "Đang vận hành",
+        "address": "Đường Quang Trung, P. Phú La, Q. Hà Đông",
+        "connect": "KĐT Văn Khê, The Pride"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.7505,
+          20.9489
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-2a-12",
+      "properties": {
+        "name": "Ga Yên Nghĩa",
+        "line": "Line 2A",
+        "type": "Ga trên cao - Ga cuối",
+        "status": "Đang vận hành",
+        "address": "Bến xe Yên Nghĩa, Quốc lộ 6, Q. Hà Đông",
+        "connect": "Bến xe khách liên tỉnh Yên Nghĩa, Bus BRT 01"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.742,
+          20.9405
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-01",
+      "properties": {
+        "name": "Ga Nhổn",
+        "line": "Line 3",
+        "type": "Ga trên cao - Depot",
+        "status": "Đã vận hành đoạn trên cao",
+        "address": "Đường Cầu Diễn, P. Minh Khai, Q. Bắc Từ Liêm",
+        "connect": "Trường Đại học Công nghiệp Hà Nội"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.7335,
+          21.0632
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-02",
+      "properties": {
+        "name": "Ga Minh Khai",
+        "line": "Line 3",
+        "type": "Ga trên cao",
+        "status": "Đã vận hành đoạn trên cao",
+        "address": "Quốc lộ 32, Q. Bắc Từ Liêm",
+        "connect": "Khu vực dân cư Phúc Diễn, Minh Khai"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.7432,
+          21.056
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-03",
+      "properties": {
+        "name": "Ga Phú Diễn",
+        "line": "Line 3",
+        "type": "Ga trên cao",
+        "status": "Đã vận hành đoạn trên cao",
+        "address": "Quốc lộ 32, Q. Bắc Từ Liêm",
+        "connect": "Trường ĐH Tài nguyên & Môi trường"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.7548,
+          21.0489
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-04",
+      "properties": {
+        "name": "Ga Cầu Diễn",
+        "line": "Line 3",
+        "type": "Ga trên cao",
+        "status": "Đã vận hành đoạn trên cao",
+        "address": "Đường Cầu Diễn, Q. Nam Từ Liêm",
+        "connect": "Chợ Cầu Diễn, khu đô thị Mỹ Đình 1"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.7665,
+          21.0425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-05",
+      "properties": {
+        "name": "Ga Lê Đức Thọ",
+        "line": "Line 3",
+        "type": "Ga trên cao",
+        "status": "Đã vận hành đoạn trên cao",
+        "address": "Đường Hồ Tùng Mậu, Q. Nam Từ Liêm",
+        "connect": "Khu Liên hợp Thể thao Mỹ Đình, ĐH Thương Mại"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.777,
+          21.038
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-06",
+      "properties": {
+        "name": "Ga Đại học Quốc Gia",
+        "line": "Line 3 & Line 8 (Quy hoạch)",
+        "type": "Ga trên cao",
+        "status": "Đã vận hành đoạn trên cao",
+        "address": "Đường Xuân Thủy, Q. Cầu Giấy",
+        "connect": "ĐHQGHN, ĐH Sư Phạm Hà Nội, ĐH Ngoại Ngữ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.7865,
+          21.0362
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-07",
+      "properties": {
+        "name": "Ga Chùa Hà",
+        "line": "Line 3",
+        "type": "Ga trên cao",
+        "status": "Đã vận hành đoạn trên cao",
+        "address": "Đường Cầu Giấy, Q. Cầu Giấy",
+        "connect": "Di tích Chùa Hà, Học viện Báo chí & Tuyên truyền"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.796,
+          21.0335
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-08",
+      "properties": {
+        "name": "Ga Cầu Giấy",
+        "line": "Line 3",
+        "type": "Ga trên cao (Điểm chuyển tiếp ngầm)",
+        "status": "Đã vận hành đoạn trên cao",
+        "address": "Đường Cầu Giấy (Cửa ngõ Đền Voi Phục), Q. Cầu Giấy",
+        "connect": "Trường ĐH Giao thông Vận tải, Công viên Thủ Lệ"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8035,
+          21.0305
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-09",
+      "properties": {
+        "name": "Ga Kim Mã",
+        "line": "Line 3 & Line 5 (Quy hoạch)",
+        "type": "Ga ngầm sâu 3 tầng",
+        "status": "Đang thi công phần ngầm",
+        "address": "Phố Kim Mã (Đối diện KS Daewoo, Lotte Center), Q. Ba Đình",
+        "connect": "Tổ hợp Lotte Center Hà Nội, Đại sứ quán Nhật Bản"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8175,
+          21.0315
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-10",
+      "properties": {
+        "name": "Ga Văn Miếu",
+        "line": "Line 3",
+        "type": "Ga ngầm",
+        "status": "Đang thi công phần ngầm",
+        "address": "Phố Quốc Tử Giám, Q. Đống Đa",
+        "connect": "Di tích quốc gia đặc biệt Văn Miếu - Quốc Tử Giám"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.8365,
+          21.0282
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "st-3-11",
+      "properties": {
+        "name": "Ga Hà Nội",
+        "line": "Line 3 & Line 1 (Đầu mối quốc gia)",
+        "type": "Ga ngầm trung tâm & Ga đường sắt quốc gia",
+        "status": "Đang thi công đoạn ngầm",
+        "address": "Đường Trần Hưng Đạo / Lê Duẩn, Q. Hoàn Kiếm",
+        "connect": "Ga xe lửa Hà Nội (Đường sắt Bắc Nam), Bệnh viện Tim Hà Nội"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          105.842,
+          21.0245
+        ]
+      }
+    }
+  ]
+}

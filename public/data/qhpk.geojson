@@ -1,0 +1,357 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "qhpk-1",
+      "properties": {
+        "code": "H1-1",
+        "name": "Phân khu Đô thị Lịch sử H1-1 (Hoàn Kiếm)",
+        "category": "Đất ở",
+        "landUse": "Bảo tồn kiến trúc di sản & thương mại du lịch",
+        "grp": "QHPK",
+        "area": "528 ha",
+        "density": "65%",
+        "maxFloors": "4 - 8 tầng",
+        "status": "Đã phê duyệt (QĐ 1345/QĐ-UBND)",
+        "description": "Khu vực đô thị lịch sử hạn chế phát triển, bảo tồn không gian di sản Hồ Gươm, khu phố cổ 36 phố phường và phố cũ.",
+        "fc": "#ff5a00"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.845,
+              21.02
+            ],
+            [
+              105.865,
+              21.022
+            ],
+            [
+              105.862,
+              21.04
+            ],
+            [
+              105.842,
+              21.038
+            ],
+            [
+              105.845,
+              21.02
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhpk-2",
+      "properties": {
+        "code": "H1-2",
+        "name": "Phân khu Đô thị Lịch sử H1-2 (Ba Đình)",
+        "category": "Đất công cộng",
+        "landUse": "Trung tâm chính trị - hành chính quốc gia",
+        "grp": "QHPK",
+        "area": "703 ha",
+        "density": "50%",
+        "maxFloors": "5 - 11 tầng",
+        "status": "Đã phê duyệt (QĐ 1346/QĐ-UBND)",
+        "description": "Khu trung tâm hành chính chính trị quốc gia, Quảng trường Ba Đình, Hoàng thành Thăng Long và các cơ quan ngoại giao.",
+        "fc": "#ea580c"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.815,
+              21.028
+            ],
+            [
+              105.842,
+              21.028
+            ],
+            [
+              105.84,
+              21.048
+            ],
+            [
+              105.812,
+              21.045
+            ],
+            [
+              105.815,
+              21.028
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhpk-3",
+      "properties": {
+        "code": "H1-3",
+        "name": "Phân khu Đô thị Lịch sử H1-3 (Đống Đa)",
+        "category": "Đất ở",
+        "landUse": "Cải tạo chỉnh trang đô thị cũ & công cộng dịch vụ",
+        "grp": "QHPK",
+        "area": "994 ha",
+        "density": "60%",
+        "maxFloors": "6 - 15 tầng",
+        "status": "Đã phê duyệt (QĐ 1347/QĐ-UBND)",
+        "description": "Khu dân cư đô thị hiện hữu cần cải tạo đồng bộ hạ tầng kỹ thuật, mở rộng mạng lưới giao thông công cộng và công viên cây xanh.",
+        "fc": "#f97316"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.808,
+              21.008
+            ],
+            [
+              105.842,
+              21.01
+            ],
+            [
+              105.84,
+              21.028
+            ],
+            [
+              105.812,
+              21.025
+            ],
+            [
+              105.808,
+              21.008
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhpk-4",
+      "properties": {
+        "code": "H1-4",
+        "name": "Phân khu Đô thị Lịch sử H1-4 (Hai Bà Trưng)",
+        "category": "Đất hỗn hợp",
+        "landUse": "Đô thị hỗn hợp, thương mại - dịch vụ & giáo dục đại học",
+        "grp": "QHPK",
+        "area": "1.000 ha",
+        "density": "55%",
+        "maxFloors": "6 - 20 tầng",
+        "status": "Đã phê duyệt (QĐ 1348/QĐ-UBND)",
+        "description": "Trung tâm cụm trường đại học hàng đầu (Bách Khoa, Kinh Tế, Xây Dựng), bệnh viện tuyến trung ương và các khu đô thị mới.",
+        "fc": "#fb923c"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.842,
+              20.995
+            ],
+            [
+              105.875,
+              20.998
+            ],
+            [
+              105.865,
+              21.022
+            ],
+            [
+              105.842,
+              21.02
+            ],
+            [
+              105.842,
+              20.995
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhpk-5",
+      "properties": {
+        "code": "S1",
+        "name": "Phân khu Đô thị Mở rộng S1 (Đan Phượng - Bắc Từ Liêm)",
+        "category": "Đất ở",
+        "landUse": "Khu đô thị sinh thái mới và trung tâm nghiên cứu đào tạo",
+        "grp": "QHPK",
+        "area": "1.890 ha",
+        "density": "40%",
+        "maxFloors": "12 - 35 tầng",
+        "status": "Đã phê duyệt đồ án quy hoạch",
+        "description": "Khu đô thị hiện đại gắn với trục Tây Thăng Long, phát triển nhà ở chất lượng cao và công viên hồ điều hòa.",
+        "fc": "#fdba74"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.72,
+              21.06
+            ],
+            [
+              105.77,
+              21.065
+            ],
+            [
+              105.775,
+              21.1
+            ],
+            [
+              105.725,
+              21.095
+            ],
+            [
+              105.72,
+              21.06
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhpk-6",
+      "properties": {
+        "code": "S2",
+        "name": "Phân khu Đô thị S2 (Nam Từ Liêm - Hoài Đức)",
+        "category": "Đất hỗn hợp",
+        "landUse": "Tổ hợp đô thị đa chức năng và dịch vụ thể thao quốc tế",
+        "grp": "QHPK",
+        "area": "2.350 ha",
+        "density": "45%",
+        "maxFloors": "18 - 40 tầng",
+        "status": "Đang hoàn thiện các khu đô thị thành phần",
+        "description": "Trung tâm Khu liên hợp thể thao quốc gia Mỹ Đình, đại đô thị thông minh Vinhomes Smart City và chuỗi công viên ven sông Nhuệ.",
+        "fc": "#ea580c"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.73,
+              20.995
+            ],
+            [
+              105.775,
+              21
+            ],
+            [
+              105.77,
+              21.045
+            ],
+            [
+              105.725,
+              21.04
+            ],
+            [
+              105.73,
+              20.995
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhpk-7",
+      "properties": {
+        "code": "N10",
+        "name": "Phân khu Đô thị N10 (Long Biên - Gia Lâm)",
+        "category": "Đất ở",
+        "landUse": "Khu đô thị sinh thái dịch vụ chất lượng cao phía Đông",
+        "grp": "QHPK",
+        "area": "4.037 ha",
+        "density": "40%",
+        "maxFloors": "15 - 35 tầng",
+        "status": "Đã phê duyệt và đang triển khai hạ tầng",
+        "description": "Khu đô thị cửa ngõ phía Đông thủ đô với hệ thống trung tâm thương mại lớn Aeon Mall, Vinhomes Riverside và sân bay Gia Lâm.",
+        "fc": "#c2410c"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.88,
+              21.015
+            ],
+            [
+              105.945,
+              21.02
+            ],
+            [
+              105.935,
+              21.07
+            ],
+            [
+              105.87,
+              21.065
+            ],
+            [
+              105.88,
+              21.015
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhpk-8",
+      "properties": {
+        "code": "GS",
+        "name": "Phân khu Không gian Xanh Nêm & Hành lang Sinh thái GS",
+        "category": "Đất cây xanh",
+        "landUse": "Vành đai xanh, nêm xanh sinh thái cách ly đô thị",
+        "grp": "QHPK",
+        "area": "6.660 ha",
+        "density": "5%",
+        "maxFloors": "1 - 3 tầng",
+        "status": "Bảo vệ nghiêm ngặt không gian mở",
+        "description": "Hành lang xanh phân cách đô thị trung tâm và các chuỗi đô thị vệ tinh, ưu tiên nông nghiệp sạch và công viên dã ngoại.",
+        "fc": "#059669"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.69,
+              20.98
+            ],
+            [
+              105.725,
+              20.985
+            ],
+            [
+              105.72,
+              21.08
+            ],
+            [
+              105.685,
+              21.075
+            ],
+            [
+              105.69,
+              20.98
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "line-1",
+      "properties": {
+        "name": "Tuyến Metro số 1 (Yên Viên - Ngọc Hồi)",
+        "code": "Line 1",
+        "status": "Quy hoạch chuẩn bị đầu tư",
+        "statusType": "planned",
+        "length": "38.7 km",
+        "stationsCount": 23,
+        "color": "#ef3cff",
+        "description": "Tuyến xuyên tâm Bắc - Nam kết nối Yên Viên, Gia Lâm qua cầu Long Biên mới tới Giáp Bát, Văn Điển, Ngọc Hồi."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            105.905,
+            21.105
+          ],
+          [
+            105.882,
+            21.065
+          ],
+          [
+            105.86,
+            21.044
+          ],
+          [
+            105.842,
+            21.0245
+          ],
+          [
+            105.841,
+            20.985
+          ],
+          [
+            105.84,
+            20.952
+          ],
+          [
+            105.845,
+            20.915
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "line-2",
+      "properties": {
+        "name": "Tuyến Metro số 2 (Nam Thăng Long - Trần Hưng Đạo - Thượng Đình)",
+        "code": "Line 2",
+        "status": "Quy hoạch ưu tiên đầu tư",
+        "statusType": "planned",
+        "length": "35.2 km",
+        "stationsCount": 20,
+        "color": "#3b82f6",
+        "description": "Tuyến kết nối KĐT Nam Thăng Long (Ciputra) qua Tây Hồ Tây, Bờ Hồ Hoàn Kiếm đến Thượng Đình."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            105.795,
+            21.095
+          ],
+          [
+            105.805,
+            21.065
+          ],
+          [
+            105.825,
+            21.045
+          ],
+          [
+            105.855,
+            21.028
+          ],
+          [
+            105.852,
+            21.018
+          ],
+          [
+            105.83,
+            21.005
+          ],
+          [
+            105.8118,
+            20.9982
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "line-5",
+      "properties": {
+        "name": "Tuyến Metro số 5 (Văn Cao - Ngọc Khánh - Đại lộ Thăng Long - Hòa Lạc)",
+        "code": "Line 5",
+        "status": "Quy hoạch đã phê duyệt Báo cáo NCKT",
+        "statusType": "planned",
+        "length": "38.43 km",
+        "stationsCount": 21,
+        "color": "#a855f7",
+        "description": "Tuyến đường sắt đô thị tốc độ cao kết nối trung tâm Ba Đình theo hành lang Đại lộ Thăng Long đến Khu CNC Hòa Lạc."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            105.816,
+            21.042
+          ],
+          [
+            105.812,
+            21.031
+          ],
+          [
+            105.795,
+            21.015
+          ],
+          [
+            105.76,
+            21.002
+          ],
+          [
+            105.72,
+            20.998
+          ],
+          [
+            105.65,
+            20.999
+          ],
+          [
+            105.535,
+            21.015
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "line-8",
+      "properties": {
+        "name": "Tuyến Metro số 8 (Sơn Đồng - Mai Dịch - Vành Đai 3 - Lĩnh Nam - Dương Xá)",
+        "code": "Line 8",
+        "status": "Quy hoạch kết nối vành đai",
+        "statusType": "planned",
+        "length": "37.0 km",
+        "stationsCount": 26,
+        "color": "#f59e0b",
+        "description": "Tuyến vành đai liên kết chuỗi đô thị Tây Nam và Đông Nam Thủ đô."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            105.705,
+            21.05
+          ],
+          [
+            105.78,
+            21.04
+          ],
+          [
+            105.8033,
+            20.9906
+          ],
+          [
+            105.865,
+            20.985
+          ],
+          [
+            105.955,
+            21.005
+          ]
+        ]
+      }
+    }
+  ]
+}

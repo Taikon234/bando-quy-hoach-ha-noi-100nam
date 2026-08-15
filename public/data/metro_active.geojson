@@ -1,0 +1,141 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "line-2a",
+      "properties": {
+        "name": "Tuyến Metro số 2A (Cát Linh - Hà Đông)",
+        "code": "Line 2A",
+        "status": "Đang vận hành thương mại",
+        "statusType": "operating",
+        "length": "13.05 km",
+        "stationsCount": 12,
+        "speed": "35 - 80 km/h",
+        "color": "#00a878",
+        "description": "Tuyến đường sắt đô thị trên cao đầu tiên tại Việt Nam, kết nối quận Đống Đa qua Thanh Xuân đến quận Hà Đông."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            105.8278,
+            21.0279
+          ],
+          [
+            105.8236,
+            21.0205
+          ],
+          [
+            105.8193,
+            21.0152
+          ],
+          [
+            105.8126,
+            21.0094
+          ],
+          [
+            105.8118,
+            20.9982
+          ],
+          [
+            105.8033,
+            20.9906
+          ],
+          [
+            105.7925,
+            20.9818
+          ],
+          [
+            105.782,
+            20.9734
+          ],
+          [
+            105.7735,
+            20.9658
+          ],
+          [
+            105.761,
+            20.9572
+          ],
+          [
+            105.7505,
+            20.9489
+          ],
+          [
+            105.742,
+            20.9405
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "line-3",
+      "properties": {
+        "name": "Tuyến Metro số 3 (Nhổn - Ga Hà Nội)",
+        "code": "Line 3",
+        "status": "Đoạn trên cao vận hành / Đoạn ngầm đang thi công",
+        "statusType": "construction",
+        "length": "12.5 km (8.5 km trên cao, 4 km ngầm)",
+        "stationsCount": 12,
+        "speed": "35 - 80 km/h",
+        "color": "#ff6b00",
+        "description": "Tuyến đường sắt huyết mạch nối cửa ngõ phía Tây (Bắc Từ Liêm, Nam Từ Liêm) vào trung tâm lõi Ba Đình, Đống Đa, Hoàn Kiếm."
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            105.7335,
+            21.0632
+          ],
+          [
+            105.7432,
+            21.056
+          ],
+          [
+            105.7548,
+            21.0489
+          ],
+          [
+            105.7665,
+            21.0425
+          ],
+          [
+            105.777,
+            21.038
+          ],
+          [
+            105.7865,
+            21.0362
+          ],
+          [
+            105.796,
+            21.0335
+          ],
+          [
+            105.8035,
+            21.0305
+          ],
+          [
+            105.8175,
+            21.0315
+          ],
+          [
+            105.8278,
+            21.0279
+          ],
+          [
+            105.8365,
+            21.0282
+          ],
+          [
+            105.842,
+            21.0245
+          ]
+        ]
+      }
+    }
+  ]
+}

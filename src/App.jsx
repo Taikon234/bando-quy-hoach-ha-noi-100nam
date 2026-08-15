@@ -292,6 +292,11 @@ function App() {
     };
   }, []);
 
+  const handleSelectFeatureRef = useRef(handleSelectFeature);
+  useEffect(() => {
+    handleSelectFeatureRef.current = handleSelectFeature;
+  }, [handleSelectFeature]);
+
   // Filtered Planning GeoJSON datasets
   const filteredQHCGeoJSON = useMemo(() => {
     if (filters.grp === "QHPK") {
@@ -334,11 +339,17 @@ function App() {
     const map = mapRef.current;
     if (!map || !isMapReady) return;
 
-    const qhcSource = map.getSource("qhc-data");
-    if (qhcSource) qhcSource.setData(filteredQHCGeoJSON);
+    try {
+      if (map.isStyleLoaded()) {
+        const qhcSource = map.getSource("qhc-data");
+        if (qhcSource) qhcSource.setData(filteredQHCGeoJSON);
 
-    const qhpkSource = map.getSource("qhpk-data");
-    if (qhpkSource) qhpkSource.setData(filteredQHPKGeoJSON);
+        const qhpkSource = map.getSource("qhpk-data");
+        if (qhpkSource) qhpkSource.setData(filteredQHPKGeoJSON);
+      }
+    } catch (e) {
+      console.warn("Update GeoJSON error:", e);
+    }
   }, [filteredQHCGeoJSON, filteredQHPKGeoJSON, isMapReady]);
 
   // Update layer visibility
@@ -347,8 +358,12 @@ function App() {
     if (!map || !isMapReady) return;
 
     const setVisibility = (layerId, isVisible) => {
-      if (map.getLayer(layerId)) {
-        map.setLayoutProperty(layerId, "visibility", isVisible ? "visible" : "none");
+      try {
+        if (map.isStyleLoaded() && map.getLayer(layerId)) {
+          map.setLayoutProperty(layerId, "visibility", isVisible ? "visible" : "none");
+        }
+      } catch (e) {
+        console.warn("Set visibility error:", layerId, e);
       }
     };
 
@@ -420,12 +435,13 @@ function App() {
     source.setData({ type: "FeatureCollection", features });
   }, [isMeasuringActive, measureMode, measurePoints, isMapReady]);
 
-  // Initialize MapLibre GL
+  // Initialize MapLibre GL ONCE on mount
   useEffect(() => {
     if (mapRef.current) return;
 
     const initialCenter = initialUrlState.current?.center || HANOI_CENTER;
     const initialZoom = initialUrlState.current?.zoom || DEFAULT_ZOOM;
+    const initialDark = localStorage.getItem("hanoi_map_dark") === "true";
 
     const map = new maplibregl.Map({
       container: mapContainer.current,
@@ -500,14 +516,14 @@ function App() {
             id: "basemap-light",
             type: "raster",
             source: "osm-basemap",
-            layout: { visibility: dark ? "none" : "visible" },
+            layout: { visibility: initialDark ? "none" : "visible" },
             paint: { "raster-opacity": 0.95 },
           },
           {
             id: "basemap-dark",
             type: "raster",
             source: "carto-dark",
-            layout: { visibility: dark ? "visible" : "none" },
+            layout: { visibility: initialDark ? "visible" : "none" },
             paint: { "raster-opacity": 0.98 },
           },
 
@@ -692,6 +708,17 @@ function App() {
     map.on("load", () => {
       setIsMapReady(true);
 
+      // Force initial sync of sources
+      try {
+        if (map.getSource("qhc-data")) map.getSource("qhc-data").setData(QHC_GEOJSON);
+        if (map.getSource("qhpk-data")) map.getSource("qhpk-data").setData(QHPK_GEOJSON);
+        if (map.getSource("metro-active-data")) map.getSource("metro-active-data").setData(METRO_ACTIVE_GEOJSON);
+        if (map.getSource("metro-planned-data")) map.getSource("metro-planned-data").setData(METRO_PLANNED_GEOJSON);
+        if (map.getSource("metro-stations-data")) map.getSource("metro-stations-data").setData(METRO_STATIONS_GEOJSON);
+      } catch (e) {
+        console.warn("Initial data sync:", e);
+      }
+
       // If initial zone is in URL, select it
       if (initialUrlState.current?.zoneCode) {
         const allFeatures = [...QHC_GEOJSON.features, ...QHPK_GEOJSON.features];
@@ -699,7 +726,7 @@ function App() {
           (f) => f.properties?.code === initialUrlState.current.zoneCode
         );
         if (match) {
-          handleSelectFeature(match, true);
+          handleSelectFeatureRef.current?.(match, true);
         }
       }
     });
@@ -713,7 +740,6 @@ function App() {
 
     // Map click for Measuring Tool
     map.on("click", (e) => {
-      // If measure tool is active, append point
       if (window.__isMeasuringActive) {
         const pt = [e.lngLat.lng, e.lngLat.lat];
         setMeasurePoints((prev) => [...prev, pt]);
@@ -724,12 +750,63 @@ function App() {
     // Map click for Zoning Polygons
     map.on("click", "qhc-fill", (e) => {
       if (window.__isMeasuringActive) return;
-      handleSelectFeature(e.features?.[0], true);
+      handleSelectFeatureRef.current?.(e.features?.[0], true);
     });
 
     map.on("click", "qhpk-fill", (e) => {
       if (window.__isMeasuringActive) return;
-      handleSelectFeature(e.features?.[0], true);
+      handleSelectFeatureRef.current?.(e.features?.[0], true);
+    });
+
+    // Map click for Metro Stations
+    map.on("click", "metro-stations-circle-outer", (e) => {
+      if (window.__isMeasuringActive) return;
+      const feat = e.features?.[0];
+      if (!feat) return;
+      const p = feat.properties || {};
+      const coords = feat.geometry.coordinates;
+
+      if (popupRef.current) popupRef.current.remove();
+      popupRef.current = new maplibregl.Popup({ offset: 12, className: "custom-maplibre-popup" })
+        .setLngLat(coords)
+        .setHTML(`
+          <div class="custom-popup">
+            <div class="popup-header">
+              <span class="popup-badge" style="background:#ffedd5;color:#c2410c;">Ga Metro</span>
+              <span class="popup-code">Tuyến ${escapeHtml(p.line || "")}</span>
+            </div>
+            <h3 class="popup-title">${escapeHtml(p.name || "")}</h3>
+            <p style="margin:0 0 6px;color:#64748b;font-size:11.5px;">📍 ${escapeHtml(p.address || p.status || "")}</p>
+          </div>
+        `)
+        .addTo(map);
+    });
+
+    // Map click for Metro Lines
+    const metroLineLayers = ["metro-active-operating", "metro-active-construction", "metro-planned-lines"];
+    metroLineLayers.forEach((layerId) => {
+      map.on("click", layerId, (e) => {
+        if (window.__isMeasuringActive) return;
+        const feat = e.features?.[0];
+        if (!feat) return;
+        const p = feat.properties || {};
+
+        if (popupRef.current) popupRef.current.remove();
+        popupRef.current = new maplibregl.Popup({ offset: 12, className: "custom-maplibre-popup" })
+          .setLngLat([e.lngLat.lng, e.lngLat.lat])
+          .setHTML(`
+            <div class="custom-popup">
+              <div class="popup-header">
+                <span class="popup-badge" style="background:#dcfce7;color:#15803d;">Đường sắt Đô thị</span>
+                <span class="popup-code">${escapeHtml(p.code || "")}</span>
+              </div>
+              <h3 class="popup-title">${escapeHtml(p.name || "")}</h3>
+              <p style="margin:0 0 4px;color:#475569;font-size:12px;"><b>Trạng thái:</b> ${escapeHtml(p.status || "")}</p>
+              ${p.length ? `<p style="margin:0;color:#64748b;font-size:11.5px;">Chiều dài: ${escapeHtml(p.length)}</p>` : ""}
+            </div>
+          `)
+          .addTo(map);
+      });
     });
 
     // Hover cursor styling
@@ -761,7 +838,7 @@ function App() {
       map.remove();
       mapRef.current = null;
     };
-  }, [dark, handleSelectFeature]);
+  }, []);
 
   // Keep measuring state synced with window bridge
   useEffect(() => {

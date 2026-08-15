@@ -1,0 +1,481 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "qhc-1",
+      "properties": {
+        "code": "QHC-DT-01",
+        "name": "Khu vực Đất ở Đô thị Trung tâm",
+        "category": "Đất ở",
+        "landUse": "Đất ở đô thị mật độ cao",
+        "grp": "QHC",
+        "area": "1.420 ha",
+        "density": "70%",
+        "maxFloors": "12 - 25 tầng",
+        "status": "Đã phê duyệt (QĐ 1259/QĐ-TTg)",
+        "description": "Khu vực dân cư đô thị cải tạo, chỉnh trang và phát triển nhà ở hỗn hợp hiện đại tại Ba Đình - Đống Đa - Hoàn Kiếm.",
+        "fc": "#8b2cff"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.815,
+              21.015
+            ],
+            [
+              105.845,
+              21.012
+            ],
+            [
+              105.865,
+              21.025
+            ],
+            [
+              105.86,
+              21.045
+            ],
+            [
+              105.83,
+              21.048
+            ],
+            [
+              105.81,
+              21.035
+            ],
+            [
+              105.815,
+              21.015
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-2",
+      "properties": {
+        "code": "QHC-DT-02",
+        "name": "Khu Đô thị Mới Cầu Giấy - Mỹ Đình",
+        "category": "Đất ở",
+        "landUse": "Đất ở đô thị mới kết hợp thương mại dịch vụ",
+        "grp": "QHC",
+        "area": "2.150 ha",
+        "density": "45%",
+        "maxFloors": "25 - 45 tầng",
+        "status": "Đang phát triển theo quy hoạch",
+        "description": "Trung tâm dịch vụ tài chính, thương mại và chuỗi đô thị cao tầng phía Tây Hà Nội.",
+        "fc": "#a855f7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.76,
+              21.01
+            ],
+            [
+              105.805,
+              21.012
+            ],
+            [
+              105.808,
+              21.048
+            ],
+            [
+              105.775,
+              21.055
+            ],
+            [
+              105.755,
+              21.035
+            ],
+            [
+              105.76,
+              21.01
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-3",
+      "properties": {
+        "code": "QHC-CC-01",
+        "name": "Trung tâm Hành chính - Văn hóa Quốc gia Tây Hồ Tây",
+        "category": "Đất công cộng",
+        "landUse": "Đất công trình công cộng cấp quốc gia và đô thị",
+        "grp": "QHC",
+        "area": "850 ha",
+        "density": "35%",
+        "maxFloors": "15 - 35 tầng",
+        "status": "Đã phê duyệt quy hoạch chi tiết 1/500",
+        "description": "Trụ sở các bộ ngành trung ương, đại sứ quán, nhà hát Thăng Long và tổ hợp văn hóa quốc tế.",
+        "fc": "#c084fc"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.785,
+              21.055
+            ],
+            [
+              105.815,
+              21.058
+            ],
+            [
+              105.82,
+              21.08
+            ],
+            [
+              105.79,
+              21.078
+            ],
+            [
+              105.785,
+              21.055
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-4",
+      "properties": {
+        "code": "QHC-CX-01",
+        "name": "Hành lang Cây xanh - Công viên TDTT Hồ Tây & Sông Hồng",
+        "category": "Đất cây xanh",
+        "landUse": "Đất công viên, cây xanh chuyên đề, thể dục thể thao",
+        "grp": "QHC",
+        "area": "1.680 ha",
+        "density": "5%",
+        "maxFloors": "1 - 3 tầng",
+        "status": "Bảo tồn và tôn tạo cảnh quan",
+        "description": "Lá phổi xanh trung tâm thủ đô bao gồm quần thể mặt nước Hồ Tây và công viên cảnh quan ven sông.",
+        "fc": "#10b981"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.81,
+              21.05
+            ],
+            [
+              105.845,
+              21.055
+            ],
+            [
+              105.84,
+              21.085
+            ],
+            [
+              105.815,
+              21.08
+            ],
+            [
+              105.805,
+              21.065
+            ],
+            [
+              105.81,
+              21.05
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-5",
+      "properties": {
+        "code": "QHC-GT-01",
+        "name": "Đầu mối Cảng Hàng không Quốc tế Nội Bài & Logistic",
+        "category": "Đất giao thông",
+        "landUse": "Đất hạ tầng giao thông hàng không và logistics vùng",
+        "grp": "QHC",
+        "area": "2.230 ha",
+        "density": "20%",
+        "maxFloors": "4 tầng",
+        "status": "Đang mở rộng quy hoạch đến 2030, tầm nhìn 2050",
+        "description": "Cảng hàng không quốc tế cấp 4F, công suất 60-100 triệu hành khách/năm và khu dịch vụ logistics hiện đại.",
+        "fc": "#6366f1"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.77,
+              21.205
+            ],
+            [
+              105.84,
+              21.208
+            ],
+            [
+              105.845,
+              21.238
+            ],
+            [
+              105.775,
+              21.235
+            ],
+            [
+              105.77,
+              21.205
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-6",
+      "properties": {
+        "code": "QHC-HH-01",
+        "name": "Khu Đô thị Sinh thái Thông minh Đông Anh - Bắc Sông Hồng",
+        "category": "Đất hỗn hợp",
+        "landUse": "Đất hỗn hợp nhà ở sinh thái, tài chính và công nghệ cao",
+        "grp": "QHC",
+        "area": "3.400 ha",
+        "density": "30%",
+        "maxFloors": "10 - 68 tầng (Tháp Tài chính)",
+        "status": "Đã duyệt quy hoạch phân khu",
+        "description": "Đô thị thông minh Bắc Hà Nội dọc trục Nhật Tân - Nội Bài, tích hợp trung tâm triển lãm quốc gia.",
+        "fc": "#9333ea"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.81,
+              21.11
+            ],
+            [
+              105.87,
+              21.115
+            ],
+            [
+              105.875,
+              21.165
+            ],
+            [
+              105.815,
+              21.16
+            ],
+            [
+              105.81,
+              21.11
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-7",
+      "properties": {
+        "code": "QHC-CN-01",
+        "name": "Khu Công nghệ cao Hòa Lạc & Đô thị Vệ tinh",
+        "category": "Đất công nghiệp",
+        "landUse": "Đất nghiên cứu công nghệ cao, công nghiệp sạch và đại học",
+        "grp": "QHC",
+        "area": "1.586 ha",
+        "density": "30%",
+        "maxFloors": "5 - 15 tầng",
+        "status": "Đã vận hành các phân khu chức năng",
+        "description": "Trung tâm đổi mới sáng tạo quốc gia, các viện nghiên cứu, trường đại học FPT, VJU và tổ hợp công nghiệp phần mềm.",
+        "fc": "#7c3aed"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.51,
+              20.99
+            ],
+            [
+              105.56,
+              20.995
+            ],
+            [
+              105.565,
+              21.04
+            ],
+            [
+              105.515,
+              21.035
+            ],
+            [
+              105.51,
+              20.99
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-8",
+      "properties": {
+        "code": "QHC-MN-01",
+        "name": "Khu vực Trục Mặt nước Cảnh quan Sông Hồng",
+        "category": "Mặt nước",
+        "landUse": "Mặt nước, bãi bồi hành lang thoát lũ và công viên sinh thái",
+        "grp": "QHC",
+        "area": "4.200 ha",
+        "density": "5%",
+        "maxFloors": "1 - 2 tầng",
+        "status": "Đang lập quy hoạch chi tiết trục cảnh quan sông Hồng",
+        "description": "Trục cảnh quan trung tâm tương lai của Thủ đô kết nối hai bờ Bắc - Nam sông Hồng.",
+        "fc": "#0284c7"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.82,
+              21.09
+            ],
+            [
+              105.85,
+              21.07
+            ],
+            [
+              105.885,
+              21.04
+            ],
+            [
+              105.92,
+              20.98
+            ],
+            [
+              105.9,
+              20.975
+            ],
+            [
+              105.865,
+              21.03
+            ],
+            [
+              105.83,
+              21.06
+            ],
+            [
+              105.805,
+              21.085
+            ],
+            [
+              105.82,
+              21.09
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-9",
+      "properties": {
+        "code": "QHC-DT-03",
+        "name": "Đô thị Hà Đông - Thanh Xuân - Hoàng Mai",
+        "category": "Đất ở",
+        "landUse": "Đất ở đô thị kết hợp dịch vụ thương mại Nam Hà Nội",
+        "grp": "QHC",
+        "area": "2.850 ha",
+        "density": "50%",
+        "maxFloors": "15 - 35 tầng",
+        "status": "Khu vực đô thị hóa hoàn thiện",
+        "description": "Khu vực chuỗi đô thị hoàn chỉnh kết nối dọc tuyến metro Cát Linh - Hà Đông và vành đai 3.",
+        "fc": "#7e22ce"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.76,
+              20.96
+            ],
+            [
+              105.83,
+              20.965
+            ],
+            [
+              105.85,
+              21
+            ],
+            [
+              105.79,
+              20.995
+            ],
+            [
+              105.755,
+              20.98
+            ],
+            [
+              105.76,
+              20.96
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "qhc-10",
+      "properties": {
+        "code": "QHC-VT-01",
+        "name": "Đô thị Vệ tinh Phú Xuyên - Cửa ngõ phía Nam",
+        "category": "Đất hỗn hợp",
+        "landUse": "Đô thị công nghiệp, đầu mối giao thông và tiếp vận phía Nam",
+        "grp": "QHC",
+        "area": "1.920 ha",
+        "density": "35%",
+        "maxFloors": "5 - 15 tầng",
+        "status": "Quy hoạch phân khu đô thị vệ tinh",
+        "description": "Trung tâm phát triển kinh tế công nghiệp phụ trợ, cảng thủy nội địa và đầu mối giao thông đường cao tốc Bắc Nam.",
+        "fc": "#6b21a8"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              105.88,
+              20.71
+            ],
+            [
+              105.94,
+              20.715
+            ],
+            [
+              105.945,
+              20.765
+            ],
+            [
+              105.885,
+              20.76
+            ],
+            [
+              105.88,
+              20.71
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
