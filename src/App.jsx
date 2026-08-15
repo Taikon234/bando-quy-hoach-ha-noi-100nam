@@ -334,10 +334,10 @@ function App() {
     const isQHCVisible = layers.qhc && (filters.grp === "all" || filters.grp === "QHC");
     const isQHPKVisible = layers.qhpk && (filters.grp === "all" || filters.grp === "QHPK");
 
+    setVisibility("qhc-outline", isQHCVisible);
     setVisibility("qhc-fill", isQHCVisible);
-    setVisibility("qhc-line", isQHCVisible);
+    setVisibility("qhpk-outline", isQHPKVisible);
     setVisibility("qhpk-fill", isQHPKVisible);
-    setVisibility("qhpk-line", isQHPKVisible);
 
     // 2. Land use filter expression
     let landUseFilter = null;
@@ -356,10 +356,10 @@ function App() {
     }
 
     try {
+      if (map.getLayer("qhc-outline")) map.setFilter("qhc-outline", landUseFilter);
       if (map.getLayer("qhc-fill")) map.setFilter("qhc-fill", landUseFilter);
-      if (map.getLayer("qhc-line")) map.setFilter("qhc-line", landUseFilter);
+      if (map.getLayer("qhpk-outline")) map.setFilter("qhpk-outline", landUseFilter);
       if (map.getLayer("qhpk-fill")) map.setFilter("qhpk-fill", landUseFilter);
-      if (map.getLayer("qhpk-line")) map.setFilter("qhpk-line", landUseFilter);
     } catch (e) {
       console.warn("Set filter error:", e);
     }
@@ -529,21 +529,21 @@ function App() {
           source: "qhc-data",
           layout: { visibility: "visible" },
           paint: {
-            "fill-color": ["coalesce", ["get", "fc"], "#8b2cff"],
-            "fill-opacity": 0.45,
+            "fill-color": "#8b2cff",
+            "fill-opacity": 0.08,
           },
         });
       }
-      if (!map.getLayer("qhc-line")) {
+      if (!map.getLayer("qhc-outline")) {
         map.addLayer({
-          id: "qhc-line",
+          id: "qhc-outline",
           type: "line",
           source: "qhc-data",
           layout: { visibility: "visible" },
           paint: {
-            "line-color": "#6b21a8",
-            "line-width": 2,
-            "line-opacity": 0.85,
+            "line-color": "#8b2cff",
+            "line-width": 3,
+            "line-opacity": 0.95,
           },
         });
       }
@@ -556,21 +556,21 @@ function App() {
           source: "qhpk-data",
           layout: { visibility: "visible" },
           paint: {
-            "fill-color": ["coalesce", ["get", "fc"], "#ff5a00"],
-            "fill-opacity": 0.5,
+            "fill-color": "#ff5a00",
+            "fill-opacity": 0.08,
           },
         });
       }
-      if (!map.getLayer("qhpk-line")) {
+      if (!map.getLayer("qhpk-outline")) {
         map.addLayer({
-          id: "qhpk-line",
+          id: "qhpk-outline",
           type: "line",
           source: "qhpk-data",
           layout: { visibility: "visible" },
           paint: {
-            "line-color": "#c2410c",
-            "line-width": 2,
-            "line-opacity": 0.9,
+            "line-color": "#ff5a00",
+            "line-width": 3,
+            "line-opacity": 0.95,
           },
         });
       }
@@ -755,14 +755,11 @@ function App() {
     });
 
     // Map click for Zoning Polygons
-    map.on("click", "qhc-fill", (e) => {
-      if (window.__isMeasuringActive) return;
-      handleSelectFeatureRef.current?.(e.features?.[0], true);
-    });
-
-    map.on("click", "qhpk-fill", (e) => {
-      if (window.__isMeasuringActive) return;
-      handleSelectFeatureRef.current?.(e.features?.[0], true);
+    ["qhc-fill", "qhc-outline", "qhpk-fill", "qhpk-outline"].forEach((layerId) => {
+      map.on("click", layerId, (e) => {
+        if (window.__isMeasuringActive) return;
+        handleSelectFeatureRef.current?.(e.features?.[0], true);
+      });
     });
 
     // Map click for Metro Stations
@@ -819,7 +816,9 @@ function App() {
     // Hover cursor styling
     const interactiveLayers = [
       "qhc-fill",
+      "qhc-outline",
       "qhpk-fill",
+      "qhpk-outline",
       "metro-stations-circle-outer",
       "metro-active-operating",
       "metro-active-construction",
