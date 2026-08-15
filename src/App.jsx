@@ -529,7 +529,7 @@ function App() {
           source: "qhc-data",
           layout: { visibility: "visible" },
           paint: {
-            "fill-color": ["to-color", ["get", "fc"], "#8b2cff"],
+            "fill-color": ["coalesce", ["get", "fc"], "#8b2cff"],
             "fill-opacity": 0.45,
           },
         });
@@ -556,7 +556,7 @@ function App() {
           source: "qhpk-data",
           layout: { visibility: "visible" },
           paint: {
-            "fill-color": ["to-color", ["get", "fc"], "#ff5a00"],
+            "fill-color": ["coalesce", ["get", "fc"], "#ff5a00"],
             "fill-opacity": 0.5,
           },
         });
@@ -641,7 +641,7 @@ function App() {
           source: "metro-planned-data",
           layout: { visibility: "visible" },
           paint: {
-            "line-color": ["to-color", ["get", "color"], "#ef3cff"],
+            "line-color": ["coalesce", ["get", "color"], "#ef3cff"],
             "line-width": 3.5,
             "line-dasharray": [2, 2],
             "line-opacity": 0.85,
