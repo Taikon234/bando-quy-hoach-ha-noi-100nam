@@ -1,7 +1,5 @@
 # Bản đồ quy hoạch Hà Nội - React + MapLibre
 
-Project này dựng bản đồ theo hướng của:
-https://locsummer.github.io/bando-quy-hoach-ha-noi/
 
 Dữ liệu Vector Tiles:
 - Quy hoạch: https://gateway.datviet.ai/api/tiles/hanoi/{z}/{x}/{y}.pbf
