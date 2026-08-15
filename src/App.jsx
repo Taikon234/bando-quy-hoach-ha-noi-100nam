@@ -50,6 +50,7 @@ import { escapeHtml } from "./utils/sanitizeUtils.js";
 
 function App() {
   const mapContainer = useRef(null);
+  const overlayCanvasRef = useRef(null);
   const mapRef = useRef(null);
   const userMarkerRef = useRef(null);
   const popupRef = useRef(null);
@@ -315,7 +316,154 @@ function App() {
     }).length;
   }, [filters]);
 
-  // Update layer visibility and land use filter using native MapLibre GPU filters
+  // Render Planning Polygons using HTML5 Canvas Overlay (Guaranteed 100% reliable)
+  const renderCanvasPolygons = useCallback(() => {
+    const canvas = overlayCanvasRef.current;
+    const map = mapRef.current;
+    if (!canvas || !map) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    const width = Math.round(rect.width);
+    const height = Math.round(rect.height);
+
+    if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+    }
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const drawPolygonGeometry = (geom, fillColor, strokeColor, lineWidth = 2.5) => {
+      ctx.save();
+      ctx.beginPath();
+
+      const drawRing = (ring) => {
+        for (let i = 0; i < ring.length; i++) {
+          const pt = map.project(ring[i]);
+          const x = pt.x * dpr;
+          const y = pt.y * dpr;
+          if (i === 0) {
+            ctx.moveTo(x, y);
+          } else {
+            ctx.lineTo(x, y);
+          }
+        }
+        ctx.closePath();
+      };
+
+      if (geom.type === "Polygon") {
+        geom.coordinates.forEach((ring) => drawRing(ring));
+      } else if (geom.type === "MultiPolygon") {
+        geom.coordinates.forEach((polygon) => {
+          polygon.forEach((ring) => drawRing(ring));
+        });
+      }
+
+      if (fillColor) {
+        ctx.fillStyle = fillColor;
+        ctx.fill("evenodd");
+      }
+      if (strokeColor) {
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = lineWidth * dpr;
+        ctx.lineJoin = "round";
+        ctx.lineCap = "round";
+        ctx.stroke();
+      }
+      ctx.restore();
+    };
+
+    // Filter check helper
+    const matchesLandUse = (category) => {
+      if (filters.landUse === "all") return true;
+      const cat = (category || "").toLowerCase();
+      if (filters.landUse === "residential") return /ở|dân cư|đô thị/.test(cat);
+      if (filters.landUse === "green") return /cây xanh|công viên|thể thao|tdtt/.test(cat);
+      if (filters.landUse === "water") return /sông|hồ|mặt nước/.test(cat);
+      if (filters.landUse === "public") return /công cộng|thương mại|dịch vụ/.test(cat);
+      if (filters.landUse === "traffic") return /giao thông|hạ tầng|sân bay/.test(cat);
+      if (filters.landUse === "industrial") return /công nghiệp|công nghệ/.test(cat);
+      return true;
+    };
+
+    // 1. Draw QHC Polygons (Purple overlay)
+    const isQHCVisible = layers.qhc && (filters.grp === "all" || filters.grp === "QHC");
+    if (isQHCVisible) {
+      QHC_GEOJSON.features.forEach((feat) => {
+        if (!matchesLandUse(feat.properties?.category)) return;
+        drawPolygonGeometry(
+          feat.geometry,
+          "rgba(139, 44, 255, 0.22)", // Soft purple fill
+          "rgba(139, 44, 255, 0.95)", // High-contrast purple outline
+          3.0
+        );
+      });
+    }
+
+    // 2. Draw QHPK Polygons (Orange overlay)
+    const isQHPKVisible = layers.qhpk && (filters.grp === "all" || filters.grp === "QHPK");
+    if (isQHPKVisible) {
+      QHPK_GEOJSON.features.forEach((feat) => {
+        if (!matchesLandUse(feat.properties?.category)) return;
+        drawPolygonGeometry(
+          feat.geometry,
+          "rgba(255, 90, 0, 0.25)", // Soft orange fill
+          "rgba(255, 90, 0, 0.95)", // High-contrast orange outline
+          3.0
+        );
+      });
+    }
+
+    // 3. Highlight Selected Feature
+    if (selectedFeature && selectedFeature.geometry) {
+      drawPolygonGeometry(
+        selectedFeature.geometry,
+        "rgba(0, 242, 254, 0.35)",
+        "#00f2fe",
+        4.5
+      );
+    }
+  }, [layers, filters, selectedFeature]);
+
+  // Connect canvas redraw to MapLibre camera motion events
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+
+    let animFrameId = null;
+    const scheduleRedraw = () => {
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      animFrameId = requestAnimationFrame(() => {
+        renderCanvasPolygons();
+      });
+    };
+
+    map.on("move", scheduleRedraw);
+    map.on("zoom", scheduleRedraw);
+    map.on("resize", scheduleRedraw);
+    map.on("rotate", scheduleRedraw);
+    map.on("pitch", scheduleRedraw);
+    map.on("idle", scheduleRedraw);
+
+    // Initial render
+    scheduleRedraw();
+
+    return () => {
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      map.off("move", scheduleRedraw);
+      map.off("zoom", scheduleRedraw);
+      map.off("resize", scheduleRedraw);
+      map.off("rotate", scheduleRedraw);
+      map.off("pitch", scheduleRedraw);
+      map.off("idle", scheduleRedraw);
+    };
+  }, [renderCanvasPolygons, isMapReady]);
+
+  // Update Metro visibility on MapLibre
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !isMapReady) return;
@@ -330,41 +478,6 @@ function App() {
       }
     };
 
-    // 1. Group visibility (QHC / QHPK)
-    const isQHCVisible = layers.qhc && (filters.grp === "all" || filters.grp === "QHC");
-    const isQHPKVisible = layers.qhpk && (filters.grp === "all" || filters.grp === "QHPK");
-
-    setVisibility("qhc-outline", isQHCVisible);
-    setVisibility("qhc-fill", isQHCVisible);
-    setVisibility("qhpk-outline", isQHPKVisible);
-    setVisibility("qhpk-fill", isQHPKVisible);
-
-    // 2. Land use filter expression
-    let landUseFilter = null;
-    if (filters.landUse === "residential") {
-      landUseFilter = ["==", ["get", "category"], "Đất ở"];
-    } else if (filters.landUse === "green") {
-      landUseFilter = ["==", ["get", "category"], "Đất cây xanh"];
-    } else if (filters.landUse === "water") {
-      landUseFilter = ["==", ["get", "category"], "Mặt nước"];
-    } else if (filters.landUse === "public") {
-      landUseFilter = ["==", ["get", "category"], "Đất công cộng"];
-    } else if (filters.landUse === "traffic") {
-      landUseFilter = ["==", ["get", "category"], "Đất giao thông"];
-    } else if (filters.landUse === "industrial") {
-      landUseFilter = ["==", ["get", "category"], "Đất công nghiệp"];
-    }
-
-    try {
-      if (map.getLayer("qhc-outline")) map.setFilter("qhc-outline", landUseFilter);
-      if (map.getLayer("qhc-fill")) map.setFilter("qhc-fill", landUseFilter);
-      if (map.getLayer("qhpk-outline")) map.setFilter("qhpk-outline", landUseFilter);
-      if (map.getLayer("qhpk-fill")) map.setFilter("qhpk-fill", landUseFilter);
-    } catch (e) {
-      console.warn("Set filter error:", e);
-    }
-
-    // 3. Metro visibility
     const isMetroActiveVisible =
       layers.metro &&
       (filters.metroStatus === "all" || filters.metroStatus === "operating");
@@ -495,22 +608,14 @@ function App() {
       "bottom-left"
     );
 
-    // Function to safely setup planning and metro sources & layers
+    // Function to safely setup metro & measure layers in MapLibre
     const setupPlanningLayers = (mapInstance) => {
       if (!mapInstance) return;
 
-      console.log("=== setupPlanningLayers executing ===");
+      console.log("=== setupMetroAndMeasureLayers executing ===");
 
       // 1. Remove old layers if exist
       const layerIds = [
-        "qhc-debug-fill",
-        "qhc-outline",
-        "qhc-fill",
-        "qhc-line",
-        "qhpk-debug-fill",
-        "qhpk-outline",
-        "qhpk-fill",
-        "qhpk-line",
         "search-highlight-fill",
         "search-highlight-line",
         "metro-active-operating",
@@ -534,8 +639,6 @@ function App() {
 
       // 2. Remove old sources if exist
       const sourceIds = [
-        "qhc-data",
-        "qhpk-data",
         "metro-active-data",
         "metro-planned-data",
         "metro-stations-data",
@@ -553,16 +656,6 @@ function App() {
       });
 
       // 3. Add fresh clean GeoJSON sources
-      mapInstance.addSource("qhc-data", {
-        type: "geojson",
-        data: JSON.parse(JSON.stringify(QHC_GEOJSON)),
-      });
-
-      mapInstance.addSource("qhpk-data", {
-        type: "geojson",
-        data: JSON.parse(JSON.stringify(QHPK_GEOJSON)),
-      });
-
       mapInstance.addSource("metro-active-data", {
         type: "geojson",
         data: JSON.parse(JSON.stringify(METRO_ACTIVE_GEOJSON)),
@@ -588,55 +681,7 @@ function App() {
         data: { type: "FeatureCollection", features: [] },
       });
 
-      // 4. QHC Planning Layer: Test Red Fill & Outline
-      mapInstance.addLayer({
-        id: "qhc-debug-fill",
-        type: "fill",
-        source: "qhc-data",
-        layout: { visibility: "visible" },
-        paint: {
-          "fill-color": "#ff0000",
-          "fill-opacity": 0.5,
-        },
-      });
-
-      mapInstance.addLayer({
-        id: "qhc-outline",
-        type: "line",
-        source: "qhc-data",
-        layout: { visibility: "visible" },
-        paint: {
-          "line-color": "#8b2cff",
-          "line-width": 3.5,
-          "line-opacity": 0.95,
-        },
-      });
-
-      // 5. QHPK Planning Layer: Test Green Fill & Outline
-      mapInstance.addLayer({
-        id: "qhpk-debug-fill",
-        type: "fill",
-        source: "qhpk-data",
-        layout: { visibility: "visible" },
-        paint: {
-          "fill-color": "#00ff00",
-          "fill-opacity": 0.5,
-        },
-      });
-
-      mapInstance.addLayer({
-        id: "qhpk-outline",
-        type: "line",
-        source: "qhpk-data",
-        layout: { visibility: "visible" },
-        paint: {
-          "line-color": "#ff5a00",
-          "line-width": 3.5,
-          "line-opacity": 0.95,
-        },
-      });
-
-      // 6. Highlight Selection Layer
+      // 4. Highlight Selection Layer
       mapInstance.addLayer({
         id: "search-highlight-fill",
         type: "fill",
@@ -660,7 +705,7 @@ function App() {
         },
       });
 
-      // 7. Active Metro Lines
+      // 5. Active Metro Lines
       mapInstance.addLayer({
         id: "metro-active-operating",
         type: "line",
@@ -688,7 +733,7 @@ function App() {
         },
       });
 
-      // 8. Planned Metro Lines
+      // 6. Planned Metro Lines
       mapInstance.addLayer({
         id: "metro-planned-lines",
         type: "line",
@@ -702,7 +747,7 @@ function App() {
         },
       });
 
-      // 9. Metro Stations
+      // 7. Metro Stations
       mapInstance.addLayer({
         id: "metro-stations-circle-outer",
         type: "circle",
@@ -727,7 +772,7 @@ function App() {
         },
       });
 
-      // 10. Measurement Layer
+      // 8. Measurement Layer
       mapInstance.addLayer({
         id: "measure-fill",
         type: "fill",
@@ -767,8 +812,7 @@ function App() {
         },
       });
 
-      console.log("=== All Planning & Metro Layers Setup Successfully ===");
-      console.log("Active layers count:", mapInstance.getStyle().layers.length);
+      console.log("=== Metro & Measurement Layers Setup Successfully ===");
     };
 
     map.on("load", () => {
@@ -795,21 +839,56 @@ function App() {
       syncMapStateToUrl([c.lng, c.lat], z);
     });
 
-    // Map click for Measuring Tool
+    // Point in Polygon hit-testing helper for canvas click selection
+    const isPointInPolygon = (point, vs) => {
+      const x = point[0], y = point[1];
+      let inside = false;
+      for (let i = 0, j = vs.length - 1; i < vs.length; j = i++) {
+        const xi = vs[i][0], yi = vs[i][1];
+        const xj = vs[j][0], yj = vs[j][1];
+        const intersect = ((yi > y) !== (yj > y)) && (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi);
+        if (intersect) inside = !inside;
+      }
+      return inside;
+    };
+
+    const isPointInFeature = (point, feat) => {
+      if (!feat || !feat.geometry) return false;
+      const { type, coordinates } = feat.geometry;
+      if (type === "Polygon") {
+        return isPointInPolygon(point, coordinates[0]);
+      }
+      if (type === "MultiPolygon") {
+        return coordinates.some((poly) => isPointInPolygon(point, poly[0]));
+      }
+      return false;
+    };
+
+    // Map click for Measuring Tool and Planning Zones
     map.on("click", (e) => {
       if (window.__isMeasuringActive) {
         const pt = [e.lngLat.lng, e.lngLat.lat];
         setMeasurePoints((prev) => [...prev, pt]);
         return;
       }
-    });
 
-    // Map click for Zoning Polygons
-    ["qhc-fill", "qhc-outline", "qhpk-fill", "qhpk-outline"].forEach((layerId) => {
-      map.on("click", layerId, (e) => {
-        if (window.__isMeasuringActive) return;
-        handleSelectFeatureRef.current?.(e.features?.[0], true);
-      });
+      const clickCoords = [e.lngLat.lng, e.lngLat.lat];
+
+      // 1. Check QHPK features (detailed zones)
+      for (const feat of QHPK_GEOJSON.features) {
+        if (isPointInFeature(clickCoords, feat)) {
+          handleSelectFeatureRef.current?.(feat, true);
+          return;
+        }
+      }
+
+      // 2. Check QHC features
+      for (const feat of QHC_GEOJSON.features) {
+        if (isPointInFeature(clickCoords, feat)) {
+          handleSelectFeatureRef.current?.(feat, true);
+          return;
+        }
+      }
     });
 
     // Map click for Metro Stations
@@ -1039,8 +1118,21 @@ function App() {
       </section>
 
       {/* 3. MAIN MAP CONTAINER */}
-      <main className="map-wrapper">
+      <main className="map-wrapper" style={{ position: "relative", overflow: "hidden" }}>
         <div ref={mapContainer} className="map" />
+        <canvas
+          ref={overlayCanvasRef}
+          className="planning-canvas-overlay"
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+            zIndex: 1,
+          }}
+        />
 
         {/* LEFT: LAYER CONTROL DRAWER */}
         <LayerControl
