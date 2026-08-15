@@ -114,6 +114,33 @@ function App() {
     setTimeout(() => setGlobalToast(""), duration);
   }, []);
 
+  // Global Escape key listener to close active modals & panels
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsZoningListOpen(false);
+        setIsZoningDetailOpen(false);
+        setIsLandPriceOpen(false);
+        setIsStatsOpen(false);
+        setIsGuideOpen(false);
+        setIsFaqOpen(false);
+        setIsBookmarksOpen(false);
+        setIsFilterPanelOpen(false);
+        setIsMeasuringActive(false);
+      }
+    };
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown);
+  }, []);
+
+  // Map resize trigger on drawer/panel toggles
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      mapRef.current?.resize();
+    }, 250);
+    return () => clearTimeout(timer);
+  }, [isLayerControlOpen, isDetailPanelOpen, isFilterPanelOpen]);
+
   // Sync Dark mode to Body & LocalStorage
   useEffect(() => {
     try {
